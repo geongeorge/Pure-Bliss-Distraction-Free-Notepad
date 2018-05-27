@@ -11,4 +11,4 @@ zero things to distract you.
 ## See Demo
 here - https://geongeorge.github.io/Pure-Bliss-Distraction-Free-Notepad/
 
-geongeorge.com
+Author: http://geongeorge.com/
