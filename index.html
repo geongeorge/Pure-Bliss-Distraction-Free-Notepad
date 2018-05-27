@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Notepad</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Song+Myung" rel="stylesheet">
+	<script src="modules/medium-js/js/medium-editor.js"></script>
+	<link rel="stylesheet" href="modules/medium-js/css/medium-editor.css">
+	<link rel="stylesheet" href="modules/medium-js/css/themes/default.css">
+	<style type="text/css">
+		body {
+			font-family: 'Song Myung', serif;
+		}
+		.container {
+			margin-top: 100px;
+			  padding-right: 15px;
+			  padding-left: 15px;
+			  margin-right: auto;
+			  margin-left: auto;
+			}
+			@media (min-width: 768px) {
+			  .container {
+			    width: 750px;
+			  }
+			}
+			@media (min-width: 992px) {
+			  .container {
+			    width: 970px;
+			  }
+			}
+			.editable {
+				font-size: 18px;
+				min-height: 600px;
+			}
+			.editable:focus {
+				outline: none;
+			}
+	</style>
+</head>
+<body>
+<div class="container editable" contenteditable="true">
+	<h1>Hi there!</h1>
+	<p>This is xyzpad. 
+	You can type here, <u>distraction free!</u></p>
+</div>
+<script>var editor = new MediumEditor('.editable');</script>
+</body>
+</html>
