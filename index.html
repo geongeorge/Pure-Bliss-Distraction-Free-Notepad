@@ -3,15 +3,24 @@
 <head>
 	<title>Notepad</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/css?family=Song+Myung" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Song+Myung" rel="stylesheet"> -->
 	<script src="modules/medium-js/js/medium-editor.js"></script>
 	<link rel="stylesheet" href="modules/medium-js/css/medium-editor.css">
 	<link rel="stylesheet" href="modules/medium-js/css/themes/default.css">
 	<style type="text/css">
 		body {
 			font-family: 'Song Myung', serif;
-			color: 	#282828;
-			background: #F5F5F5;
+			/* color: 	#282828; */
+			background: rgb(252, 252, 252);
+		}
+		.DBPaper {
+			font-family: AtlasGrotesk-editor-rtl, AtlasGrotesk-editor, -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Oxygen, Ubuntu, Cantarell, “Open Sans”, “Helvetica Neue”, sans-serif;
+			font-size: 16px;
+			line-height: 26px;
+			color: #1b2733;
+			font-variant-ligatures: no-common-ligatures;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			-webkit-font-smoothing: antialiased;
 		}
 		.container {
 			margin-top: 100px;
@@ -37,15 +46,84 @@
 			.editable:focus {
 				outline: none;
 			}
+			#savedmsg {
+				color: #66ff66;
+				position: fixed;
+				bottom: 20px;
+				left: 20px;
+			}
 	</style>
 </head>
 <body>
-<div class="container editable" contenteditable="true">
+<div class="container editable DBPaper" contenteditable="true" id="editor">
 	<h1>Hi there!</h1>
 	<p>This is Pure Bliss Notepad. 
 	You can type here, <u>distraction-free!</u></p>
 	<p><em>Press <code>F11</code> to enter fullscreen</em></p>
+	<p>All data is saved in your browser. It'll stay there for a while unless you clear your cache</p>
 </div>
-<script>var editor = new MediumEditor('.editable');</script>
+
+<div class="DBPaper" id="savedmsg">&#10004; Saved</div>
+<script>
+
+var mediumEditor = new MediumEditor('.editable');
+
+var editor = document.getElementById("editor");
+
+var savedmsg = document.getElementById("savedmsg");
+
+var valueSaved = "";
+
+var keyStrokes = 0;
+
+function showSaving() {
+		savedmsg.style.color = "#bfbfbf";
+		savedmsg.innerHTML = "Saving..";
+}
+function showSaved() {
+	savedmsg.style.color = "#66ff66";
+	savedmsg.innerHTML = "&#10004; Saved";
+}
+function saveVal()  {
+	valueSaved = editor.innerHTML;
+	localStorage.setItem('editortext', valueSaved);
+}
+function getVal() {
+	return localStorage.getItem('editortext');
+}
+
+
+editor.addEventListener("input", function() {
+		keyStrokes++;
+		if(keyStrokes>=6){
+			showSaving();
+			console.log("saved");
+			saveVal();
+			keyStrokes=0;
+			showSaved();
+		} else {
+			showSaving();
+		}
+    
+}, false);
+
+window.onload = function() {
+	var textvalue = getVal();
+
+	if(textvalue === null) return;
+
+	editor.innerHTML = textvalue;
+
+	setInterval(function() {
+		if(valueSaved != editor.innerHTML){
+			showSaving();
+			console.log("saved");
+			saveVal();
+			showSaved();
+		}
+	},3000);
+}
+
+</script>
 </body>
 </html>
