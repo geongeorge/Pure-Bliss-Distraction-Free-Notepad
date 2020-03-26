@@ -27,6 +27,8 @@
 			font-variant-ligatures: no-common-ligatures;
 			-webkit-tap-highlight-color: rgba(0,0,0,0);
 			-webkit-font-smoothing: antialiased;
+
+			transition: all 0.5s ease;
 		}
 		.DBPaper p {
 				display: block;
@@ -75,15 +77,18 @@
 				font-size: 16px;
 				cursor: pointer;
 			}
+			.hidden {
+				display: none;
+			}
 	</style>
 </head>
 <body>
-<div class="container editable DBPaper" contenteditable="true" id="editor">
-	<h1>Hi there!</h1>
-	<p>This is Pure Bliss Notepad. 
-	You can type here, <u>distraction-free!</u></p>
-	<p><em>Press <code>F11</code> to enter fullscreen</em></p>
-	<p>All data is saved in your browser. It'll stay there for a while unless you clear your cache</p>
+<div class="container editable DBPaper hidden" contenteditable="true" id="editor">
+	<h1>Hi there 👋</h1>
+	<p>This is <b>Quk.app</b></p>
+	<p>You can type here, <u>distraction-free!</u></p>
+	<p>All data is saved in your browser. It'll stay there untill you clear your cache</p>
+
 </div>
 
 <div class="DBPaper" id="savedmsg"></div>
@@ -182,6 +187,8 @@ window.onload = function() {
 	if(textvalue === null) return;
 
 	editor.innerHTML = textvalue;
+
+	editor.classList.remove('hidden')
 
 	setInterval(function() {
 		if(valueSaved != editor.innerHTML){
