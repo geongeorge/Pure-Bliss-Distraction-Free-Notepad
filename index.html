@@ -10,17 +10,31 @@
 		body {
 			font-family: 'Helvetica', 'Arial', sans-serif;
 			/* color: 	#282828; */
+			transition: background-color 0.5s ease;
+		}
+		.lightMode {
 			background: rgb(252, 252, 252);
+			color: #1b2733;
+		}
+		.darkMode {
+			background: #1b2733;
+			color: #fefefe;
 		}
 		.DBPaper {
 			font-family: AtlasGrotesk-editor-rtl, AtlasGrotesk-editor, -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Oxygen, Ubuntu, Cantarell, “Open Sans”, “Helvetica Neue”, sans-serif;
-			font-size: 16px;
-			line-height: 26px;
-			color: #1b2733;
+			font-size: 18px;
+			line-height: 31px;
 			font-variant-ligatures: no-common-ligatures;
 			-webkit-tap-highlight-color: rgba(0,0,0,0);
 			-webkit-font-smoothing: antialiased;
 		}
+		.DBPaper p {
+				display: block;
+				margin-block-start: 0em;
+				margin-block-end: 0em;
+				margin-inline-start: 0px;
+				margin-inline-end: 0px;
+			}
 		.container {
 			margin-top: 100px;
 			  padding-right: 15px;
@@ -46,10 +60,17 @@
 				outline: none;
 			}
 			#savedmsg {
-				color: #66ff66;
 				position: fixed;
 				bottom: 20px;
 				left: 20px;
+				font-size: 16px;
+			}
+			#themeSwitch {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				font-size: 16px;
+				cursor: pointer;
 			}
 	</style>
 </head>
@@ -62,7 +83,8 @@
 	<p>All data is saved in your browser. It'll stay there for a while unless you clear your cache</p>
 </div>
 
-<div class="DBPaper" id="savedmsg">&#10004; Saved</div>
+<div class="DBPaper" id="savedmsg"></div>
+<div id="themeSwitch">dark</div>
 <script>
 
 var mediumEditor = new MediumEditor('.editable',{
@@ -79,6 +101,9 @@ var editor = document.getElementById("editor");
 
 var savedmsg = document.getElementById("savedmsg");
 
+var themeSwitch = document.getElementById("themeSwitch");
+var darkTheme = false
+
 var valueSaved = "";
 
 var keyStrokes = 0;
@@ -88,9 +113,25 @@ function showSaving() {
 		savedmsg.innerHTML = "Saving..";
 }
 function showSaved() {
-	savedmsg.style.color = "#66ff66";
-	savedmsg.innerHTML = "&#10004; Saved";
+	savedmsg.style.color = "#48bb78";
+	savedmsg.innerHTML = "Saved";
 }
+
+function setLight() {
+	darkTheme = false
+	document.body.classList.remove("darkMode")
+	document.body.classList.add("lightMode")
+	themeSwitch.style.color = "#1b2733"; //black
+	themeSwitch.innerHTML = "dark";
+}
+function setDark() {
+	darkTheme = true
+	document.body.classList.remove("lightMode")
+	document.body.classList.add("darkMode")
+	themeSwitch.style.color = "#fefefe"; //white
+	themeSwitch.innerHTML = "light";
+}
+
 function saveVal()  {
 	valueSaved = editor.innerHTML;
 	localStorage.setItem('editortext', valueSaved);
@@ -114,6 +155,7 @@ editor.addEventListener("input", function() {
     
 }, false);
 
+
 window.onload = function() {
 	var textvalue = getVal();
 
@@ -129,6 +171,16 @@ window.onload = function() {
 			showSaved();
 		}
 	},3000);
+
+	setDark();
+	themeSwitch.addEventListener("click",function(e) {
+		console.log(e)
+		if(darkTheme) {
+			setLight();
+		} else {
+			setDark();
+		}
+	})
 }
 
 </script>
