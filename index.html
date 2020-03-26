@@ -35,6 +35,9 @@
 				margin-inline-start: 0px;
 				margin-inline-end: 0px;
 			}
+		.DBPaper a {
+			color: #4fd1c5;
+		}
 		.container {
 			margin-top: 100px;
 			  padding-right: 15px;
@@ -116,20 +119,34 @@ function showSaved() {
 	savedmsg.style.color = "#48bb78";
 	savedmsg.innerHTML = "Saved";
 }
+var setDark = function() {
+	console.log("called")
+	darkTheme = true
+	localStorage.setItem('darkTheme', darkTheme);
+	document.body.classList.remove("lightMode")
+	document.body.classList.add("darkMode")
+	themeSwitch.style.color = "#fefefe"; //white
+	themeSwitch.innerHTML = "light";
+}
 
-function setLight() {
+var setLight = function() {
 	darkTheme = false
+	localStorage.setItem('darkTheme', darkTheme);
 	document.body.classList.remove("darkMode")
 	document.body.classList.add("lightMode")
 	themeSwitch.style.color = "#1b2733"; //black
 	themeSwitch.innerHTML = "dark";
 }
-function setDark() {
-	darkTheme = true
-	document.body.classList.remove("lightMode")
-	document.body.classList.add("darkMode")
-	themeSwitch.style.color = "#fefefe"; //white
-	themeSwitch.innerHTML = "light";
+
+
+var loadTheme = function () {
+	var isDark = localStorage.getItem('darkTheme');
+	
+	if(isDark == "true"){
+		setDark()
+	} else {
+		setLight()
+	}
 }
 
 function saveVal()  {
@@ -145,7 +162,7 @@ editor.addEventListener("input", function() {
 		keyStrokes++;
 		if(keyStrokes>=6){
 			showSaving();
-			console.log("saved");
+			// console.log("saved");
 			saveVal();
 			keyStrokes=0;
 			showSaved();
@@ -157,6 +174,9 @@ editor.addEventListener("input", function() {
 
 
 window.onload = function() {
+	//set theme
+	loadTheme()
+
 	var textvalue = getVal();
 
 	if(textvalue === null) return;
@@ -166,13 +186,12 @@ window.onload = function() {
 	setInterval(function() {
 		if(valueSaved != editor.innerHTML){
 			showSaving();
-			console.log("saved by time");
+			// console.log("saved by time");
 			saveVal();
 			showSaved();
 		}
 	},3000);
 
-	setDark();
 	themeSwitch.addEventListener("click",function(e) {
 		console.log(e)
 		if(darkTheme) {
