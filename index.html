@@ -85,9 +85,13 @@
 <body>
 <div class="container editable DBPaper hidden" contenteditable="true" id="editor">
 	<h1>Hi there 👋</h1>
-	<p>This is <b>Quk.app</b></p>
+	<p>This is <b>Pure Bliss notepad</b></p>
 	<p>You can type here, <u>distraction-free!</u></p>
 	<p>All data is saved in your browser. It'll stay there untill you clear your cache</p>
+
+	<code>
+		hello
+	</code>
 
 </div>
 
@@ -184,9 +188,9 @@ window.onload = function() {
 
 	var textvalue = getVal();
 
-	if(textvalue === null) return;
-
-	editor.innerHTML = textvalue;
+	if(textvalue !== null) {
+		editor.innerHTML = textvalue;
+	}
 
 	editor.classList.remove('hidden')
 
